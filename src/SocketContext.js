@@ -1,9 +1,9 @@
-import React, {createContext, useState, useRef, useEfferct} from 'react';
+import React, {createContext, useState, useRef, useEffect} from 'react';
 import {io} from 'socket.io-client';
 import Peer from 'simple-peer';
 // import id from '../src/index'
 
-const SocketContext = createContext();
+export const SocketContext = createContext();
 
 const socket = io('http://localhost:5000');
 
@@ -20,7 +20,7 @@ export  const ContextProvider = ({children}) =>{
     const userVideo = useRef();
     const connectionRef = useRef();
 
-    useEfferct(() =>{
+    useEffect(() =>{
             navigator.mediaDevices.getUserMedia({video: true, audio: true})
                 .then((currentStream) => {
                     setStream(currentStream);

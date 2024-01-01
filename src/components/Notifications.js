@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Button } from '@mui/material';
-import {SocketContext} from '../SocketContext';
+import {SocketContext} from '../SocketContext'
 
 const Notifications = () => {
   const {anserCall, call, accepted} = useContext(SocketContext);
