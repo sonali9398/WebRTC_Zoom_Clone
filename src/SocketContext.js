@@ -7,7 +7,7 @@ const SocketContext = createContext();
 
 const socket = io('http://localhost:5000');
 
-const ContextProvider = ({children}) =>{
+export  const ContextProvider = ({children}) =>{
     const [stream, setStream] = useState(null);
     const [me, setMe] = useState();
     const[call, setCall] = useState();
@@ -39,7 +39,7 @@ const ContextProvider = ({children}) =>{
         const peer = new Peer( { initiator: false, trickle: false, stream});
 
         peer.on('signal' , (data) => {
-            socket.emit('calluser', {userToCall: id,signalData: data,from:me, name})
+            socket.emit('calluser', { signal: data, to:call.from})
         });
 
         peer.on('stream', (currentStream) =>{
@@ -52,11 +52,11 @@ const ContextProvider = ({children}) =>{
 
     }
 
-    const callUser = () =>{
+    const callUser = (id) =>{
         const peer = new Peer( { initiator: true, trickle: false, stream});
         
         peer.on('signal' , (data) => {
-            socket.emit('answercall', {signal: data, to:call.from})
+            socket.emit('calluser', {userToCall: id, signalData: data, from:me, name})
         });
 
         peer.on('stream', (currentStream) =>{
